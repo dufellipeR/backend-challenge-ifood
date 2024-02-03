@@ -38,11 +38,16 @@ public class ProductService{
     public Product update(String id, ProductDTO productData){
         Product product = this.repository.findById(id).orElseThrow(ProductNotFoundException::new);
 
-        this.categoryService.show(productData.categoryId()).ifPresent(product::setCategory);
+        if(productData.categoryId() != null){
+             this.categoryService.show(productData.categoryId()).ifPresent(product::setCategory);
+        }
 
         if(!productData.title().isEmpty()) product.setTitle(productData.title());
         if(!productData.description().isEmpty()) product.setDescription(productData.description());
-        if(productData.price() != null) product.setDescription(productData.description());
+        if(!productData.ownerId().isEmpty()) product.setOwnerId(productData.ownerId());
+        if(productData.price() != null) product.setPrice(productData.price());
+
+        this.repository.save(product);
 
         return product;
     }
