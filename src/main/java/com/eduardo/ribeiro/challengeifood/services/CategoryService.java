@@ -7,6 +7,7 @@ import com.eduardo.ribeiro.challengeifood.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -24,6 +25,10 @@ public class CategoryService {
 
     public List<Category> list(){
         return this.repository.findAll();
+    }
+
+    public Optional<Category> show(String id){
+        return this.repository.findById(id);
     }
 
     public Category update(String id, CategoryDTO categoryData){
