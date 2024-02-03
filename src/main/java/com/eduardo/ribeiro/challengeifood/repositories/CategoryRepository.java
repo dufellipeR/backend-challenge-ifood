@@ -1,4 +1,4 @@
-package com.eduardo.ribeiro.challengeifood.domain.repositories;
+package com.eduardo.ribeiro.challengeifood.repositories;
 
 import com.eduardo.ribeiro.challengeifood.domain.category.Category;
 import org.springframework.data.mongodb.repository.MongoRepository;
