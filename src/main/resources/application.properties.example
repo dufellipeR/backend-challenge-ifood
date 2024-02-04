@@ -1,0 +1,4 @@
+aws.accessKeyId=
+aws.secretKey=
+aws.region=
+aws.sns.topic.catalog.arn=

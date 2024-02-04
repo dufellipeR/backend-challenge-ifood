@@ -7,6 +7,8 @@ import com.eduardo.ribeiro.challengeifood.domain.product.ProductDTO;
 import com.eduardo.ribeiro.challengeifood.domain.product.ProductNotFoundException;
 import com.eduardo.ribeiro.challengeifood.repositories.CategoryRepository;
 import com.eduardo.ribeiro.challengeifood.repositories.ProductRepository;
+import com.eduardo.ribeiro.challengeifood.services.aws.AwsSnsService;
+import com.eduardo.ribeiro.challengeifood.services.aws.MessageDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,12 +16,14 @@ import java.util.List;
 @Service
 public class ProductService{
 
-    private CategoryService categoryService;
-    private ProductRepository repository;
+    private final AwsSnsService snsService;
+    private final CategoryService categoryService;
+    private final ProductRepository repository;
 
-    public ProductService(ProductRepository repository, CategoryService categoryService){
+    public ProductService(ProductRepository repository, CategoryService categoryService, AwsSnsService snsService){
         this.repository = repository;
         this.categoryService = categoryService;
+        this.snsService = snsService;
     }
 
     public Product create(ProductDTO productData){
@@ -28,6 +32,9 @@ public class ProductService{
         Product newProduct = new Product(productData);
         newProduct.setCategory(category);
         this.repository.save(newProduct);
+
+        this.snsService.publish(new MessageDTO(newProduct.getOwnerId()));
+
         return newProduct;
     }
 
@@ -48,6 +55,8 @@ public class ProductService{
         if(productData.price() != null) product.setPrice(productData.price());
 
         this.repository.save(product);
+
+        this.snsService.publish(new MessageDTO(product.getOwnerId()));
 
         return product;
     }
