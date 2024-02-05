@@ -30,8 +30,8 @@ Your task is to develop an API using Node.js for a product catalog management sy
 - MongoDB for the database.
 - AWS SQS for the catalog change notifications.
 - AWS S3 for storing the catalog JSON.
-- Node.js for the backend.
-- Express.js as the web framework.
+- Java for the backend.
+- Spring Boot as the web framework.
 
 <hr>
 <strong>Diagram representing the final structure of the project:</strong> <br><br>
